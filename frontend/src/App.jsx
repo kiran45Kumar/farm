@@ -4,6 +4,7 @@ import Navbar from "./components/Navbar/Navbar";
 import Title from "./components/title/Title";
 import Hero from "./components/hero/Hero";
 import Gallery from "./components/gallary/Gallery";
+import Testimonial from "./components/testimonials/Testimonial";
 const App = () => {
   return (
     <div>
@@ -13,6 +14,8 @@ const App = () => {
       <Hero />
       <Title title={"Gallary"} description={"Discover the Experience"}/>
       <Gallery/>
+      <Title title={"Testimonials"} description={"Words from people"}/>
+      <Testimonial/>
       <Routes>
         {/* <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} /> */}
