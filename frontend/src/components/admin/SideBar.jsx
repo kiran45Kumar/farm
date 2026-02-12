@@ -7,6 +7,7 @@ import { PiSignOutBold } from "react-icons/pi";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { NavLink } from "react-router-dom";
 const SideBar = () => {
   const navigate = useNavigate();
   const signOut = () => {
@@ -27,47 +28,44 @@ const SideBar = () => {
         <ul className="mx-9 my-15 text-lg">
           <div className="flex items-center gap-2 my-9 py-2 rounded-md">
             <CiHome fontSize={"25px"} fontWeight={"900"} color="blue" />
-            <Link to={"/admin"}>
-              {" "}
-              <li className="cursor-pointer text-[18px] text-4xl font-bold bg-linear-to-r from-blue-500 via-purple-500 to-pink-500 bg-clip-text text-transparent">
-                Dashboard
-              </li>
-            </Link>
+            <NavLink to={'/admin'} className="cursor-pointer text-[18px] text-4xl font-bold bg-linear-to-r from-blue-500 via-purple-500 to-pink-500 bg-clip-text text-transparent">
+              Dashboard
+            </NavLink>
           </div>
           <div className="flex items-center gap-2 my-8">
             <LuUsers fontSize={"22px"} className="text-gray-400" />
-            <li className="cursor-pointer text-[15px] text-gray-400 hover:opacity-[0.7] transition-all delay-100">
+            <NavLink className="cursor-pointer text-[15px] text-gray-400 hover:opacity-[0.7] transition-all delay-100">
               Contacts
-            </li>
+            </NavLink>
           </div>
           <div className="flex items-center gap-2 my-8">
             <VscFeedback fontSize={"22px"} className="text-gray-400" />
-            <li className="cursor-pointer text-[15px] text-gray-400 hover:opacity-[0.7] transition-all delay-100">
+            <NavLink to={"/admin/testimonial/add"} className="cursor-pointer text-[15px] text-gray-400 hover:opacity-[0.7] transition-all delay-100">
               Testimonials
-            </li>
+            </NavLink>
           </div>
           <div className="flex items-center gap-2 my-8">
             <SiGooglephotos fontSize={"22px"} className="text-gray-400" />
-            <Link to={"/gallery/add/"}>
-              <li className="cursor-pointer text-[15px] text-gray-400 hover:opacity-[0.7] transition-all delay-100">
+
+              <NavLink to="/admin/gallery/add" className="cursor-pointer text-[15px] text-gray-400 hover:opacity-[0.7] transition-all delay-100">
                 Galleries
-              </li>
-            </Link>
+              </NavLink>
+          
           </div>
           <div className="flex items-center gap-2 my-8">
             <BiCategory fontSize={"22px"} className="text-gray-400" />
-            <Link to={"/category/add"}><li  className="cursor-pointer text-[15px] text-gray-400 hover:opacity-[0.7] transition-all delay-100">
+            <NavLink to="/admin/category/add" className="cursor-pointer text-[15px] text-gray-400 hover:opacity-[0.7] transition-all delay-100">
               Categories
-            </li></Link>
+            </NavLink>
           </div>
           <div className="flex items-center gap-2 my-8">
             <PiSignOutBold fontSize={"22px"} className="text-gray-400" />
-            <li
+            <NavLink
               onClick={signOut}
               className="cursor-pointer text-[15px] text-gray-400 hover:opacity-[0.7] transition-all delay-100"
             >
               Sign Out
-            </li>
+            </NavLink>
           </div>
         </ul>
         <div className="flex justify-center mt-20">

@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { loginUser } from "../../api/api";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import "react-toastify/dist/ReactToastify.css";
 
 const AdminLogin = () => {
     const [email, setEmail] = useState("");
@@ -25,7 +26,6 @@ const AdminLogin = () => {
 
     return (
         <>
-            <ToastContainer />
             <div className="admin-login p-6">
 
                 <div className="space-y-4 max-w-sm mx-auto">

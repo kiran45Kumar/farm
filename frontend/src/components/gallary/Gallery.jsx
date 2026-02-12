@@ -1,128 +1,82 @@
-import React from "react";
-import gallery_img1 from "../../assets/gallery-img1.jpg";
-import gallery_img2 from "../../assets/gallery-img2.jpg";
-import gallery_img3 from "../../assets/gallery-img3.jpg";
-import gallery_img4 from "../../assets/gallery-img4.jpg";
-import gallery_img5 from "../../assets/gallery-img5.jpg";
-import gallery_img6 from "../../assets/gallery-img6.jpg";
-import gallery_img7 from "../../assets/gallery-img7.jpg";
-import gallery_img8 from "../../assets/gallery-img8.jpg";
+import { useEffect, useState } from "react";
+import { getGalleries, getCategories } from "../../api/api";
 
 const Gallery = () => {
+  const [galleries, setGalleries] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState("All");
+  useEffect(() => {
+    const fetchGalleries = async () => {
+      try {
+        const data = await getGalleries();
+        setGalleries(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchGalleries();
+  }, []);
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const data = await getCategories();
+        setCategories(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchCategories();
+  }, []);
+
   return (
     <>
       <div className="gallery p-5">
+
         <div className="gallery-list m-5">
           <ul className="flex items-center justify-center gap-20 cursor-pointer roboto-regular-400 text-[#404A3D]">
-            <li className="flex items-center justify-center h-15 w-30 rounded-full text-white bg-[#404A3D] rounded-">
+            <li
+              className={`flex items-center justify-center h-15 w-30 rounded-full text-white ${selectedCategory === "All"
+                  ? "bg-[#404A3D]"
+                  : "bg-gray-300 text-black"
+                }`}
+              onClick={() => setSelectedCategory("All")}
+            >
               All
             </li>
-            <li>Agriculture</li>
-            <li>Extensive</li>
-            <li>Farming Tips</li>
-            <li>Food Crops</li>
-            <li>Mixed Farming</li>
-            <li>Organic Farm</li>
+
+            {categories.map((category, index) => (
+              <li
+                key={index}
+                className={`flex items-center justify-center h-15 w-30 rounded-full cursor-pointer `}
+                onClick={() => setSelectedCategory(category._id)}
+              >
+                {category.name}
+              </li>
+            ))}
           </ul>
         </div>
-        <div className="flex items-center justify-evenly flex-wrap gap-4">
-          <div className="gallery-card">
-            <img
-              src={gallery_img1}
-              alt="gallery_img"
-              className="gallery-card-img"
-              loading="lazy"
-            />
 
-            <div className="gallery-overlay">
-              <h3>Image Title</h3>
-              <p>Short description goes here</p>
-            </div>
-          </div>
-          <div className="gallery-card">
-            <img
-              src={gallery_img2}
-              alt="gallery_img"
-              className="gallery-card-img cursor-pointer"
-              loading="lazy"
-            />
-            <div className="gallery-overlay">
-              <h3>Image Title</h3>
-              <p>Short description goes here</p>
-            </div>
-          </div>
-          <div className="gallery-card">
-            <img
-              src={gallery_img3}
-              alt="gallery_img"
-              className="gallery-card-img cursor-pointer"
-              loading="lazy"
-            />
-            <div className="gallery-overlay">
-              <h3>Image Title</h3>
-              <p>Short description goes here</p>
-            </div>
-          </div>
-          <div className="gallery-card">
-            <img
-              src={gallery_img4}
-              alt="gallery_img"
-              className="gallery-card-img cursor-pointer"
-              loading="lazy"
-            />
-            <div className="gallery-overlay">
-              <h3>Image Title</h3>
-              <p>Short description goes here</p>
-            </div>
-          </div>
-          <div className="gallery-card">
-            <img
-              src={gallery_img5}
-              alt="gallery_img"
-              className="gallery-card-img cursor-pointer"
-              loading="lazy"
-            />
-            <div className="gallery-overlay">
-              <h3>Image Title</h3>
-              <p>Short description goes here</p>
-            </div>
-          </div>
-          <div className="gallery-card">
-            <img
-              src={gallery_img6}
-              alt="gallery_img"
-              className="gallery-card-img cursor-pointer"
-              loading="lazy"
-            />
-            <div className="gallery-overlay">
-              <h3>Image Title</h3>
-              <p>Short description goes here</p>
-            </div>
-          </div>
-          <div className="gallery-card">
-            <img
-              src={gallery_img7}
-              alt="gallery_img"
-              className="gallery-card-img cursor-pointer"
-              loading="lazy"
-            />
-            <div className="gallery-overlay">
-              <h3>Image Title</h3>
-              <p>Short description goes here</p>
-            </div>
-          </div>
-          <div className="gallery-card">
-            <img
-              src={gallery_img8}
-              alt="gallery_img"
-              className="gallery-card-img cursor-pointer"
-              loading="lazy"
-            />
-            <div className="gallery-overlay">
-              <h3>Image Title</h3>
-              <p>Short description goes here</p>
-            </div>
-          </div>
+        <div className="flex items-center justify-evenly flex-wrap gap-4">
+          {galleries
+            .filter((gallery) =>
+              selectedCategory === "All"
+                ? true
+                : gallery.category === selectedCategory
+            )
+            .map((gallery, index) => (
+              <div className="gallery-card" key={index}>
+                <img
+                  src={gallery.image.url}
+                  alt={gallery.title}
+                  className="gallery-card-img"
+                  loading="lazy"
+                />
+                <div className="gallery-overlay">
+                  <h3>{gallery.title}</h3>
+                  <p>"{gallery.description}"</p>
+                </div>
+              </div>
+            ))}
         </div>
       </div>
       <div className="flex items-center justify-center m-5 p-5">

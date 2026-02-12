@@ -28,24 +28,22 @@ export const submitContact = async ({
     throw new Error(errorMessage);
   }
 };
-export const getContact = async ({ name, email, phone, location, message }) => {
+export const getContacts = async () => {
   try {
+    const token = localStorage.getItem("adminToken");
     const response = await axios.get("http://localhost:5000/api/contacts/", {
-      name,
-      email,
-      phone,
-      location,
-      message,
-    });
-
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
     return response.data;
   } catch (error) {
-    const errorMessage = error.response
-      ? `Error: ${error.response.data.message || error.response.statusText}`
-      : `Error: ${error.message}`;
-    console.error(errorMessage);
 
-    throw new Error(errorMessage);
+    if (error.response && error.response.data.message) {
+      throw new Error(error.response.data.message);
+    }
+
+    throw new Error("Something went wrong. Try again.");
   }
 };
 
@@ -82,6 +80,25 @@ export const addGallery = async (formdata) => {
   }
 };
 
+export const getGalleries = async () => {
+  try {
+    const token = localStorage.getItem("adminToken");
+    const response = await axios.get("http://localhost:5000/api/gallery/", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+    return response.data;
+  } catch (error) {
+
+    if (error.response && error.response.data.message) {
+      throw new Error(error.response.data.message);
+    }
+
+    throw new Error("Something went wrong. Try again.");
+  }
+};
+
 
 export const addCategory = async (name, description) => {
   try {
@@ -102,3 +119,74 @@ export const addCategory = async (name, description) => {
   }
 };
 
+export const addTestimonial = async (form) => {
+  try {
+    const token = localStorage.getItem("adminToken");
+    const response = await axios.post("http://localhost:5000/api/testimonials/", form, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+    return response.data;
+  } catch (error) {
+
+    if (error.response && error.response.data.message) {
+      throw new Error(error.response.data.message);
+    }
+
+    throw new Error("Something went wrong. Try again.");
+  }
+};
+
+export const getTestimonials = async () => {
+  try {
+    const token = localStorage.getItem("adminToken");
+    const response = await axios.get("http://localhost:5000/api/testimonials/");
+    return response.data;
+  } catch (error) {
+
+    if (error.response && error.response.data.message) {
+      throw new Error(error.response.data.message);
+    }
+
+    throw new Error("Something went wrong. Try again.");
+  }
+};
+
+export const getTotals = async () => {
+  try {
+    const token = localStorage.getItem("adminToken");
+    const response = await axios.get("http://localhost:5000/api/admin/getTotal/", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+    return response.data;
+  } catch (error) {
+
+    if (error.response && error.response.data.message) {
+      throw new Error(error.response.data.message);
+    }
+
+    throw new Error("Something went wrong. Try again.");
+  }
+};
+
+export const getCategories = async () => {
+  try {
+    const token = localStorage.getItem("adminToken");
+    const response = await axios.get("http://localhost:5000/api/categories/", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+    return response.data;
+  } catch (error) {
+
+    if (error.response && error.response.data.message) {
+      throw new Error(error.response.data.message);
+    }
+
+    throw new Error("Something went wrong. Try again.");
+  }
+};

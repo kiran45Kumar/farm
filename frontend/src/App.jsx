@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { ToastContainer } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "aos/dist/aos.css";
 import AOS from "aos";
@@ -9,6 +9,10 @@ import AddGallery from "./components/admin/AddGallery";
 import AdminContent from "./components/admin/AdminContent";
 import AdminLogin from "./components/admin/AdminLogin";
 import AddCategory from "./components/admin/AddCategory";
+import AddTestimonial from "./components/admin/AddTestimonial";
+import ViewGallery from "./components/admin/ViewGallery";
+import ViewTestimonial from "./components/admin/ViewTestimonial";
+import { useState } from "react";
 
 AOS.init({
   duration: 2000,
@@ -18,18 +22,20 @@ AOS.init({
 });
 
 const App = () => {
+  const [flag, setFlag] = useState(false);
   return (
     <div>
       <BrowserRouter>
         <ToastContainer />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/admin" element={<Admin />} />
-          <Route path="/gallery/add" element={<AddGallery />} />
           <Route path="/admin/login" element={<AdminLogin />} />
-          <Route path="/category/add" element={<AddCategory />} />
-           {/* <Route index element={<AdminContent />} /> */}
-          {/* <Route path="contacts" element={<Contact />} /> */}
+          <Route path="/admin" element={<Admin />}>
+            <Route index element={<AdminContent />} />
+            <Route path="gallery/add" element={<AddGallery />} />
+            <Route path="testimonial/add" element={<AddTestimonial />} />
+            <Route path="category/add" element={<AddCategory />} />
+          </Route>
         </Routes>
       </BrowserRouter>
     </div>
